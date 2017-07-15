@@ -20,15 +20,15 @@
 
 			<!-- Header -->
 				<header id="header" class="alt">
-					<h1 id="logo"><a href="index.html"> Nayeon </a></h1>
+					<h1 id="logo"><a href="/"> Nayeon </a></h1>
 					<nav id="nav">
 						<ul>
 							<li class="current"><a href="/">Welcome</a></li>
 							<li class="submenu">
 								<a href="#">Layouts</a>
 								<ul>
-									<li><a href="anounce">Anounce</a></li>
-							    <li><a href="contact">Contact</a></li>
+									<li><a href="/anounce/">Anounce</a></li>
+							    <li><a href="/contact/">Contact</a></li>
 
 								</ul>
 							</li>
@@ -84,45 +84,27 @@
 							</header>
 
 							<div class="row" id="anounce_main">
-								<div class="6u 12u(narrower)" id="anounce_detail_main" value="1">
+								{% for anounce in anounce %}
+								<div style="cursor:pointer" class="6u 12u(narrower)" id="anounce_detail_main" value="{{anounce.id}}">
 									<section>
 										<header>
-											<h3>제목</h3>
+											{% if anounce.title|length > 10 %}
+											<h3>{{anounce.title|slice:"0:10"}}...</h3>
+											{% else %}
+											<h3>{{anounce.title}}</h3>
+											{% endif %}
 										</header>
-										<p>간단한 내용</p>
+										<p>{{anounce.context|slice:"0:20"}}...</p>
 									</section>
 								</div>
-								<div class="6u 12u(narrower)" id="anounce_detail_main" value="1">
-									<section>
-										<header>
-											<h3>제목</h3>
-										</header>
-										<p>간단한 내용</p>
-									</section>
-								</div>
-							</div>
-							<div class="row" id="anounce_main">
-								<div class="6u 12u(narrower)" id="anounce_detail_main" value="1">
-									<section>
-										<header>
-											<h3>제목</h3>
-										</header>
-										<p>간단한 내용</p>
-									</section>
-								</div>
-								<div class="6u 12u(narrower)" id="anounce_detail_main" value="1">
-									<section>
-										<header>
-											<h3>제목</h3>
-										</header>
-										<p>간단한 내용</p>
-									</section>
-								</div>
+								{% endfor %}
+
+
 							</div>
 
 							<footer class="major">
 								<ul class="buttons">
-									<li><a href="#" class="button">See More</a></li>
+									<li><a href="/anounce/" class="button">See More</a></li>
 								</ul>
 							</footer>
 
@@ -139,7 +121,7 @@
 					</header>
 					<footer>
 						<ul class="buttons">
-							<li><a href="#" class="button">Click!</a></li>
+							<li><a href="/contact/" class="button">Click!</a></li>
 						</ul>
 					</footer>
 
@@ -168,6 +150,15 @@
 			<script src="{% static 'assets/js/util.js' %}"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="{% static 'assets/js/main.js' %}"></script>
+			<script>
+
+			$(document).on("click", "#anounce_detail_main", function(){
+				var value = $(this).attr("value");
+				var url = "/anounce_detail/"+value;
+				$(location).attr('href',url);
+			});
+
+			</script>
 
 	</body>
 </html>
